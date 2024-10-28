@@ -1,17 +1,19 @@
 # Simple Todo App
 
-Give a brief description of the project here. Feel free to give it a different name.
+Project 7 is a "to-do" application that features an "add to-do" button where you can create a to-do task with a name and due date. You can also use the delete button to delete to-do tasks.
 
 ## Functionality
 
-Give a more detailed explanation of the project and its functionality.
+- Form validator
+- Unique IDs
+- Object Oriented Programming
 
 ## Technology
 
-Give a description of the technologies and techniques used. Pictures, GIFs, or screenshots that detail the project features are recommended.
+- HTML
+- CSS
+- JavaScript
 
 ## Deployment
 
-This project is deployed on GitHub Pages:
-
-- ADD LINK HERE
+This project is deployed on GitHub Pages: (https://billychilly808.github.io/se_project_todo-app/)
