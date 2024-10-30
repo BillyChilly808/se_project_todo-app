@@ -28,29 +28,30 @@ addTodoCloseBtn.addEventListener("click", () => {
 const newFormValidator = new FormValidator(validationConfig, addTodoForm);
 newFormValidator.enableValidation();
 
+const generateTodo = (data) => {
+  const todo = new Todo(data, "#todo-template");
+  return todo.getView();
+};
+
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-  if (addTodoForm.checkValidity()) {
-    const name = evt.target.name.value;
-    const dateInput = evt.target.date.value;
-    const date = new Date(dateInput);
-    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  const name = evt.target.name.value;
+  const dateInput = evt.target.date.value;
+  const date = new Date(dateInput);
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
-    const id = uuidv4();
-    const values = { name, date, completed: false, id };
-    const todo = new Todo(values, "#todo-template");
-    todosList.append(todo.getView());
-    closeModal(addTodoPopup);
-    addTodoForm.reset();
-  } else {
-    newFormValidator._inputList.forEach((input) => {
-      newFormValidator.checkInputValidity(input);
-    });
-  }
+  const id = uuidv4();
+  const values = { name, date, completed: false, id };
+  const todoElement = generateTodo(values);
+  todosList.append(todoElement);
+  closeModal(addTodoPopup);
+
+  addTodoForm.reset();
+  newFormValidator.resetValidation();
 });
 
 initialTodos.forEach((item) => {
-  const todo = new Todo(item, "#todo-template");
-  todosList.append(todo.getView());
+  const todoElement = generateTodo(item);
+  todosList.append(todoElement);
 });

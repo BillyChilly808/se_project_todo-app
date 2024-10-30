@@ -69,6 +69,19 @@ class FormValidator {
     });
   }
 
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      inputElement.value = "";
+      this._hideInputError(inputElement);
+    });
+
+    const buttonElement = this._formEl.querySelector(
+      this._submitButtonSelector
+    );
+    buttonElement.classList.add(this._inactiveButtonClass);
+    buttonElement.disabled = true;
+  }
+
   enableValidation() {
     this._formEl.addEventListener("submit", (evt) => {
       evt.preventDefault();
