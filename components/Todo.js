@@ -1,19 +1,34 @@
 class Todo {
-  constructor(data, selector) {
+  constructor(data, selector, handleCheck, handleDelete) {
+    this._completed = data.completed;
     this._data = data;
-    this._templateElement = document.querySelector(selector);
+    this._element = document.querySelector(selector); // This refers to the template
+    this._handleCheck = handleCheck;
+    this._handleDelete = handleDelete;
   }
 
   _setEventListeners() {
+    // Set event listener for the checkbox
     this._todoCheckboxEl.addEventListener("change", () => {
-      this._data.completed = !this._data.completed;
+      this._toggleCompletion();
+      this._handleCheck(this._completed); // Pass completion status
     });
 
-    const deleteButton = this._todoElement.querySelector(".todo__delete-btn");
-    deleteButton.addEventListener("click", () => {
-      this._todoElement.remove();
+    // Ensure the delete button is selected correctly
+    this._deleteButton = this._todoElement.querySelector(".todo__delete-btn");
+    this._deleteButton.addEventListener("click", () => {
+      this._handleDelete(this._completed); // Pass completion status for handling
+      this._remove(); // Remove the todo from the DOM
     });
   }
+
+  _toggleCompletion = () => {
+    this._completed = !this._completed; // Toggle completion status
+  };
+
+  _remove = () => {
+    this._todoElement.remove(); // This removes the todo element from the DOM
+  };
 
   _setDate() {
     const date = new Date(this._data.date);
@@ -24,7 +39,8 @@ class Todo {
   }
 
   getView() {
-    this._todoElement = this._templateElement.content
+    // Clone the template content and add data to it
+    this._todoElement = this._element.content
       .querySelector(".todo")
       .cloneNode(true);
 
@@ -38,10 +54,10 @@ class Todo {
     const todoLabel = this._todoElement.querySelector(".todo__label");
     todoLabel.setAttribute("for", `todo-${this._data.id}`);
 
-    this._setDate();
-    this._setEventListeners();
+    this._setDate(); // Set the date for the todo
+    this._setEventListeners(); // Set event listeners for the todo
 
-    return this._todoElement;
+    return this._todoElement; // Return the rendered todo element
   }
 }
 
