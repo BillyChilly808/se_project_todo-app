@@ -78,7 +78,7 @@ class FormValidator {
     const buttonElement = this._formEl.querySelector(
       this._submitButtonSelector
     );
-    buttonElement.classList.add(this._inactiveButtonClass);
+    buttonElement.classList.add(this._toggleButtonState);
     buttonElement.disabled = true;
   }
 

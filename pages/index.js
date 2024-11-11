@@ -13,37 +13,29 @@ const addTodoForm = addTodoPopupEl.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopupEl.querySelector(".popup__close");
 const todosList = document.querySelector(".todos__list");
 
-// Initialize TodoCounter with initialTodos
 const todoCounter = new TodoCounter(initialTodos, ".counter__text");
 
-// Popup for adding new todo
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
   handleFormSubmit: (inputValues) => {
-    addTodoForm.addEventListener("submit", (evt) => {
-      evt.preventDefault();
+    event.preventDefault();
 
-      const name = evt.target.name.value;
-      const dateInput = evt.target.date.value;
-      const date = new Date(dateInput);
-      date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+    const name = inputValues.name;
+    const dateInput = inputValues.date;
+    const date = new Date(dateInput);
+    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
-      const id = uuidv4();
-      const values = { name, date, completed: false, id };
+    const id = uuidv4();
+    const values = { name, date, completed: false, id };
 
-      // Generate and add the new todo to the section
-      const todoElement = generateTodo(values);
-      section.addItem(todoElement);
+    const todoElement = generateTodo(values);
+    section.addItem(todoElement);
 
-      // Update total number of tasks
-      todoCounter.updateTotal(true); // Increment total tasks
+    todoCounter.updateTotal(true);
 
-      // Close the modal and reset form
-      closeModal(addTodoPopupEl);
-      addTodoForm.reset();
-      newFormValidator.resetValidation();
-      addTodoPopup.close();
-    });
+    addTodoForm.reset();
+    newFormValidator.resetValidation();
+    addTodoPopup.close();
   },
 });
 addTodoPopup.setEventListeners();
@@ -51,13 +43,7 @@ addTodoPopup.setEventListeners();
 // Open popup when clicking "Add Todo" button
 addTodoButton.addEventListener("click", () => {
   addTodoPopup.open();
-  document.addEventListener("keyup", handleEscClose);
 });
-
-// Function to close the popup
-const closeModal = (modal) => {
-  modal.classList.remove("popup_visible");
-};
 
 // Function to handle completion toggle
 function handleCheck(completed) {
@@ -88,16 +74,6 @@ const section = new Section({
   containerSelector: ".todos__list",
 });
 section.renderItems();
-
-// Close popup on Escape key press
-function handleEscClose(evt) {
-  if (evt.key === "Escape") {
-    const openPopup = document.querySelector(".popup_visible");
-    if (openPopup) {
-      openPopup.classList.remove("popup_visible");
-    }
-  }
-}
 
 // Initialize form validation
 const newFormValidator = new FormValidator(validationConfig, addTodoForm);
