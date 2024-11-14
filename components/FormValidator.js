@@ -79,8 +79,7 @@ class FormValidator {
       this._submitButtonSelector
     );
 
-    // Use the correct class name, not a function
-    buttonElement.classList.add(this._inactiveButtonClass);
+    this._toggleButtonState();
     buttonElement.disabled = true;
   }
 
