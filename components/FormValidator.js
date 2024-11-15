@@ -75,12 +75,7 @@ class FormValidator {
       this._hideInputError(inputElement);
     });
 
-    const buttonElement = this._formEl.querySelector(
-      this._submitButtonSelector
-    );
-
     this._toggleButtonState();
-    buttonElement.disabled = true;
   }
 
   enableValidation() {
